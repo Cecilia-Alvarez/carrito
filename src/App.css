@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  color: #282c34;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-style:italic;
 }
 
 .App-logo {
