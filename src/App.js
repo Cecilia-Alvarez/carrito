@@ -1,13 +1,30 @@
+import NavBar from "./Components/NavBar";
+import ItemListContainer from "./Components/ItemListContainer";
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import './App.css';
-import NavBar from './components/navbar/navbar';
-import ItemListContainer from './components/ItemListContainer/ItemListContainer';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main:pink[100]
+    },
+    secondary: {
+      main:grey[700]
+    },
+  }
+})
 
 function App() {
   return (
-    <div className="App">
-      <NavBar/>
-      <ItemListContainer name="Diego"/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <NavBar/>
+        <ItemListContainer/>
+      </div>
+    </ThemeProvider>
   );
 }
 

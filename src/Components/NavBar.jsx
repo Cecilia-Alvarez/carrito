@@ -7,13 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import ShoppingCart from '../ShoppingCart/ShoppingCart';
+import ShoppingCart from './ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,6 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -122,12 +122,7 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new items" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <ShoppingCart/>
       </MenuItem>
       <MenuItem onClick={handleMenuOpen}>
       <Button
@@ -144,7 +139,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             size="large"
@@ -159,6 +154,7 @@ export default function NavBar() {
             variant="h6"
             noWrap
             component="div"
+            color="secondary"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             Tienda de Moda
@@ -174,11 +170,7 @@ export default function NavBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new items" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <ShoppingCart/>
-              </Badge>
-            </IconButton>
+            <ShoppingCart/>
             <IconButton
               size="small"
               edge="end"
