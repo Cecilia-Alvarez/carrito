@@ -1,5 +1,7 @@
 import NavBar from "./Components/NavBar";
 import ItemListContainer from "./Components/ItemListContainer";
+import ItemDetailContainer from "./Components/ItemDetailContainer";
+import { Routes, Route } from "react-router-dom";
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { pink } from '@mui/material/colors';
@@ -22,7 +24,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <NavBar/>
-        <ItemListContainer/>
+        <Routes>
+        <Route path="/" element={<ItemListContainer />} />
+        <Route path="item/:id" element={<ItemDetailContainer />} />
+        </Routes>
       </div>
     </ThemeProvider>
   );

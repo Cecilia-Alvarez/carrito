@@ -1,25 +1,21 @@
-import { useState, useEffect } from 'react'
-import getProducts from '../services/handMadePromise'
-import ItemList from './ItemList'
+import { useState, useEffect } from "react";
+import ItemList from "./ItemList";
 import ItemCount from "./ItemCount";
+import getProducts from "../services/handMadePromise";
 
 const ItemListContainer = ({ greeting }) => {
-  const [products, setProducts] = useState([])
-  
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     getProducts
-    .then(res => {
-      setProducts(res)
-    })
-    .catch(err => alert('Estamos ante un problema', err))
-  },[])
-
+      .then((res) => setProducts(res))
+      .catch((err) => alert("Ha ocurrido un error", err));
+  });
   return (
-    <>
-    <br/>
+    <div className="container col-12 bg-warning">
       <ItemCount stock={5} initial={1} />
       <ItemList products={products} />
-    </>
+    </div>
   );
 };
 export default ItemListContainer;
