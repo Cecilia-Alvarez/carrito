@@ -1,9 +1,12 @@
 import Item from "./Item";
+import Box from '@mui/material/Box';
 
 const ItemList = ({ products }) => {
   console.log("Products en ItemList", products);
   return (
-    <div>
+    <Box sx={{ display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between', }}>
       {products.map((product) => {
         return (
           <Item
@@ -18,7 +21,7 @@ const ItemList = ({ products }) => {
           />
         );
       })}
-    </div>
+    </Box>
   );
 };
 export default ItemList;

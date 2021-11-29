@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import Box from "@mui/material/Box"
 import ItemList from "./ItemList";
-import ItemCount from "./ItemCount";
 import getProducts from "../services/handMadePromise";
 
 const ItemListContainer = ({ greeting }) => {
@@ -12,10 +12,9 @@ const ItemListContainer = ({ greeting }) => {
       .catch((err) => alert("Ha ocurrido un error", err));
   });
   return (
-    <div className="container col-12 bg-warning">
-      <ItemCount stock={5} initial={1} />
+    <Box className="container col-12 bg-warning">
       <ItemList products={products} />
-    </div>
+    </Box>
   );
 };
 export default ItemListContainer;
