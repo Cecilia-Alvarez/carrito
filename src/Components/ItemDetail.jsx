@@ -1,3 +1,4 @@
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
@@ -8,14 +9,17 @@ const ItemDetail = (props) => {
     return (
       <Box className="flex bg-danger" sx={{ display:'flex',
       flexDirection:'column',
-      justifyContent:'center', }}>
+      justifyContent: 'center', 
+      width: 445 }}>
         <h3>Item Detail</h3>
         <h3>{title}</h3>
         <h2>${price}</h2>
         <p>{description}</p>
-        <img src={`${image}`} alt={`${image}`}></img>
+        <img src={`${image}`} alt={`${image}`} ></img>
         <Link to={`/`}>
-          <Button size="small">Volver</Button>
+          <ButtonGroup  disableElevation variant="contained"/>
+            <Button color="secondary" size="medium">Volver</Button>
+          <ButtonGroup/>
         </Link>
         <ItemCount stock={stock} initial={1} />
       </Box>
