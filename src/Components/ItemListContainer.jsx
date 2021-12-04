@@ -9,12 +9,11 @@ const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-      getProducts
-          .then(res => {
-              (id === undefined) ? setProducts(res) : setProducts(res.filter((prod) => products.category == id.toLowerCase()));
-          })
-          .catch(err => console.log('error al obtener productos', err))
-  }, [id])
+    getProducts 
+    .then((response) => {
+      (id === undefined) ? setProducts(response) :
+      setProducts(response.filter((products) => products.category === parseInt(id)))})
+  }, [id]); 
 
   return (
     <Box className="container col-12 bg-warning">

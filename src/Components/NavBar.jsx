@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -95,12 +96,12 @@ export default function NavBar() {
         horizontal: 'right',
       }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      // onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Vestidos</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Pantalones</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Tops</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Polleras</MenuItem>
+     <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/1" style={{ textDecoration:'none' }}>Pantalones</Link></MenuItem>
+     <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/2" style={{ textDecoration:'none' }}>Vestidos</Link></MenuItem>
+     <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/3" style={{ textDecoration:'none' }}>Tops</Link></MenuItem>
+     <MenuItem><Link onClick={handleMenuClose} className="links" to="/" style={{ textDecoration:'none' }}>Todo</Link></MenuItem>
     </Menu>
   );
 
@@ -150,15 +151,15 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
+          <Link className="links" to="/" style={{ textDecoration:'none' }} ><Typography
             variant="h6"
             noWrap
             component="div"
             color="secondary"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: 'none', sm: 'block' }, textDecoration:'none' }}
           >
             Tienda de Moda
-          </Typography>
+          </Typography></Link>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

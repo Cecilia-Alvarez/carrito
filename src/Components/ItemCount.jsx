@@ -33,8 +33,9 @@ const ItemCount = ({stock, initial}) => {
       <Button onClick={addItem}>+</Button>
     </ButtonGroup>
     <div>
-    <Link to={`/cart/`}>       
-    <Button disableElevation variant="contained" color= "secondary" onClick={onAdd}>Agregar al carrito</Button> 
+    <Link style={{ textDecoration:'none' }} to={`/cart/`}>       
+    <Button  disableElevation variant="contained" color= "secondary" onClick={() => {onAdd()
+    addItem()}}>Agregar al carrito</Button> 
     </Link>
     </div>
     </>

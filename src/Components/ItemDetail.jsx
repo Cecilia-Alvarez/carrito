@@ -16,9 +16,9 @@ const ItemDetail = (props) => {
         <h2>${price}</h2>
         <p>{description}</p>
         <img src={`${image}`} alt={`${image}`} ></img>
-        <Link to={`/`}>
-          <ButtonGroup  disableElevation variant="contained"/>
-            <Button color="secondary" size="medium">Volver</Button>
+        <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
+          <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
+            <Button disableElevation variant="contained">Volver</Button>
           <ButtonGroup/>
         </Link>
         <ItemCount stock={stock} initial={1} />
