@@ -3,6 +3,7 @@ import * as React from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
+import { useCartContext } from "../Contexts/CartContext";
 
 const ItemCount = ({stock, initial}) => { 
     const [count, setCount] = useState(initial)
