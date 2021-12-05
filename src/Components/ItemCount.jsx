@@ -21,7 +21,7 @@ const ItemCount = ({stock, initial}) => {
     };
 
     const onAdd = () => {
-        const message = `Agregaste ${count} producto`;
+        const message = `Agregaste ${count} productos`;
         (count === 1) ? alert(message) : alert(`${message}s`)       
     };
 
