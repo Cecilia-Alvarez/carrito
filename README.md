@@ -1,3 +1,7 @@
+# Tienda de Moda
+
+Tienda de Moda, una marca para los amantes de la moda a buen precio, es la tienda de referencia de quienes buscan las últimas tendencias sin salirse del presupuesto. Somos una empresa minorista  que ofrece al gran público lo último en moda y belleza por muy poco; en pocas palabras, moda sensacional a precios sensacionales.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
