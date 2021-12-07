@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 
+
 const cartContext = createContext();
 
-export const useCart = () => useContext(cartContext);
+export const useCartContext = () => useContext(cartContext);
 
 export const CartProvider = ({ children }) => {
 
@@ -23,8 +24,6 @@ export const CartProvider = ({ children }) => {
         {
             const newCart = cart.map(cartItem => cartItem.id === item.id ? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem);
             setCart(newCart);
-            
-            console.log(`NewCart`, newCart)
         } 
         else 
         {
@@ -35,7 +34,7 @@ export const CartProvider = ({ children }) => {
         
     };
 
-    const removeItemFromCart = (idItem) => {
+    const extractItemFromCart = (idItem) => {
 
         if (isInCart(idItem)) 
         {
@@ -60,7 +59,7 @@ export const CartProvider = ({ children }) => {
 
     const totalPriceCart = () => {
 
-        const precioTotal = 0;
+        let precioTotal = 0;
 
         precioTotal = cart.reduce((precioTotal, prod) => precioTotal + prod.cantidad * prod.precio, 0);
 
@@ -69,9 +68,11 @@ export const CartProvider = ({ children }) => {
 
     return (
         <cartContext.Provider
-            value={{ cart, setCart, isInCart, addItemToCart, removeItemFromCart, clearCart, countItemsCart, totalPriceCart }}
+            value={{ cart, setCart, isInCart, addItemToCart, extractItemFromCart, clearCart, countItemsCart, totalPriceCart }}
         >
             {children}
         </cartContext.Provider>
     );
 };
+
+export default useCartContext;

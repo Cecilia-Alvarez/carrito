@@ -1,12 +1,17 @@
-import { useState } from "react";
 import * as React from 'react';
+import { useState } from "react";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import { useCartContext } from "../Contexts/CartContext";
 
-const ItemCount = ({stock, initial}) => { 
+const ItemCount = ({stock, initial, producto}) => { 
     const [count, setCount] = useState(initial)
+
+    const [newStock, setNewStock] = useState(stock);
+
+    const { addItemToCart } = useCartContext();
+
     const addItem = () => {
         const newCount = count + 1
         if(newCount <= stock){
@@ -22,8 +27,11 @@ const ItemCount = ({stock, initial}) => {
     };
 
     const onAdd = () => {
-        const message = `Agregaste ${count} productos`;
-        (count === 1) ? alert(message) : alert(`${message}s`)       
+            const message = `Agregaste ${count} productos`;
+            (count === 1) ? alert(message) : alert(`${message}s`)
+            addItemToCart({item: producto, quantity: count});
+            setNewStock(newStock - count);
+            setCount(initial);  
     };
 
   return (
