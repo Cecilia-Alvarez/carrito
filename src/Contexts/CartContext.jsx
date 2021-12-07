@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
     const isInCart = (idItem) => {
-        const producto = cart.find(item => item.id === idItem);
+        const producto = cart.find(item => idItem === item.id);
 
         if(producto != null)
             return true;
@@ -24,6 +24,7 @@ export const CartProvider = ({ children }) => {
         {
             const newCart = cart.map(cartItem => cartItem.id === item.id ? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem);
             setCart(newCart);
+            console.log('AddItemToCart', newCart)
         } 
         else 
         {
@@ -61,7 +62,7 @@ export const CartProvider = ({ children }) => {
 
         let precioTotal = 0;
 
-        precioTotal = cart.reduce((precioTotal, prod) => precioTotal + prod.cantidad * prod.precio, 0);
+        precioTotal = cart.reduce((precioTotal, prod) => precioTotal + prod.quantity * prod.precio, 0);
 
         return precioTotal;
     };
@@ -74,5 +75,4 @@ export const CartProvider = ({ children }) => {
         </cartContext.Provider>
     );
 };
-
 export default useCartContext;

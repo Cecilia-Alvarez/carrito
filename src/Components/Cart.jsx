@@ -29,14 +29,16 @@ const Cart = () => {
         {isInCart() > 0 ? (
           cart.map((i) => (
             <>
-              <ItemCart
-                key={i.id}
-                title={i.title}
-                price={i.price}
-                image={i.image}
-                id={i.id}
-                quantity={i.quantity}
-              />
+          <ItemCart
+            key={i.product.id}
+            description={i.product.description}
+            quantity={i.product.quantity}
+            image={i.product.image}
+            price={i.product.price}
+            stock={i.product.stock}
+            title={i.product.title}
+            id={i.product.id}
+          />
             </>
           ))
         ) : (

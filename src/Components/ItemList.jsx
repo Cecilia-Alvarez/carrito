@@ -2,7 +2,7 @@ import Item from "./Item";
 import Box from '@mui/material/Box';
 
 const ItemList = ({ products }) => {
-  console.log("Products en ItemList", products);
+
   return (
     <Box sx={{ display:'flex',
     flexDirection:'row',
