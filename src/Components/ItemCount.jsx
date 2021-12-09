@@ -29,7 +29,7 @@ const ItemCount = ({stock, initial, producto}) => {
     const onAdd = () => {
             const message = `Agregaste ${count} productos`;
             (count === 1) ? alert(message) : alert(`${message}s`)
-            addItemToCart({item: producto, quantity: count});
+            // addItemToCart({item: producto, quantity: count});
             setNewStock(newStock - count);
             setCount(initial);  
     };
@@ -44,7 +44,7 @@ const ItemCount = ({stock, initial, producto}) => {
     <div>
     <Link style={{ textDecoration:'none' }} to={`/cart/`}>       
     <Button  disableElevation variant="contained" color= "secondary" onClick={() => {onAdd()
-    addItem()}}>Agregar al carrito</Button> 
+    addItemToCart()}}>Agregar al carrito</Button> 
     </Link>
     </div>
     </>

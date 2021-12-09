@@ -10,7 +10,6 @@ import { pink } from '@mui/material/colors';
 import { grey } from '@mui/material/colors';
 import './App.css';
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -24,7 +23,6 @@ const theme = createTheme({
 
 function App() {
   return (
-    // <CartContextProvider>
     <ThemeProvider theme={theme}>
         <div className="App">
           <CartProvider>

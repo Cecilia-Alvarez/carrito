@@ -26,7 +26,7 @@ const Item = ({price, image, title, id}) =>{
         </CardContent>
         <CardActions>
           <Link to={`/item/${id}`} style={{ textDecoration:'none', color:'secondary' }}>
-          <Button disableElevation variant="contained" size="small">Learn More</Button>
+          <Button disableElevation variant="contained" size="small">Detalles del Producto</Button>
           </Link>
         </CardActions>
       </Card>

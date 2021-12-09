@@ -6,18 +6,18 @@ const ItemList = ({ products }) => {
   return (
     <Box sx={{ display:'flex',
     flexDirection:'row',
-    justifyContent:'space-around', }}>
-      {products.map((product) => {
+    justifyContent:'space-between', }}>
+      {products.map((i) => {
         return (
           <Item
-            key={product.id}
-            description={product.descripcion}
-            category={product.categoria}
-            image={product.image}
-            price={product.price}
-            stock={product.stock}
-            title={product.title}
-            id={product.id}
+            key={i.id}
+            description={i.description}
+            category={i.category}
+            image={i.image}
+            price={i.price}
+            stock={i.stock}
+            title={i.title}
+            id={i.id}
           />
         );
       })}

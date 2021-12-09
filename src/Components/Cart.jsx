@@ -8,7 +8,7 @@ import ItemCart from './ItemCart'
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-    const { cart, isInCart, clearCart, totalPriceCart} = useCartContext();
+    const { cartNew, isInCart, clearCart, totalPriceCart} = useCartContext();
     const total = totalPriceCart();
   
     return (
@@ -27,15 +27,13 @@ const Cart = () => {
         <Paper elevation={24}>
       <div className="">
         {isInCart() > 0 ? (
-          cart.map((i) => (
+          cartNew.map((i) => ( 
             <>
           <ItemCart
             key={i.product.id}
-            description={i.product.description}
             quantity={i.product.quantity}
             image={i.product.image}
             price={i.product.price}
-            stock={i.product.stock}
             title={i.product.title}
             id={i.product.id}
           />

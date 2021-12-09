@@ -101,6 +101,7 @@ export default function NavBar() {
      <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/1" style={{ textDecoration:'none' }}>Pantalones</Link></MenuItem>
      <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/2" style={{ textDecoration:'none' }}>Vestidos</Link></MenuItem>
      <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/3" style={{ textDecoration:'none' }}>Tops</Link></MenuItem>
+     <MenuItem><Link onClick={handleMenuClose} className="links" to="/category/4" style={{ textDecoration:'none' }}>Polleras</Link></MenuItem>
      <MenuItem><Link onClick={handleMenuClose} className="links" to="/" style={{ textDecoration:'none' }}>Todo</Link></MenuItem>
     </Menu>
   );

@@ -11,26 +11,6 @@ import ItemCount from "./ItemCount";
 const ItemDetail = (props) => {
     const { title, price, description, image, stock } = props.item;
     return (
-    //   <Box className="flex bg-danger" sx={{ display:'flex',
-    //   flexDirection:'column',
-    //   justifyContent: 'center', 
-    //   width: 445 }}>
-    //     <h3>Item Detail</h3>
-    //     <h3>{title}</h3>
-    //     <h2>${price}</h2>
-    //     <p>{description}</p>
-    //     <img src={`${image}`} alt={`${image}`} ></img>
-        // <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
-        //   <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
-        //     <Button disableElevation variant="contained">Volver</Button>
-        //   <ButtonGroup/>
-        // </Link>
-      //   <ItemCount sx={{ display:'flex',
-      // selfAlign: 'center', 
-      // width: 445 }} stock={stock} initial={1} />
-    //   </Box>
-    // );
-
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"

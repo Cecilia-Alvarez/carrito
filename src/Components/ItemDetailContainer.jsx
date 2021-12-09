@@ -1,17 +1,25 @@
-import { useState, useEffect } from "react";
-import getProducts from "../services/handMadePromise";
+import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
+import app from '../services/getFirebase'
+import { getDoc, doc, getFirestore } from "firebase/firestore"
+import ItemDetail from './ItemDetail';
 
 const ItemDetailContainer = () => {
-  const [item, setItem] = useState({});
-  const { id } = useParams();
+    const [item, setItem] = useState([]);
+    let { id } = useParams();
 
-  useEffect(() => {
-    getProducts.then((res) => {
-      setItem(res.find((prod) => prod.id === parseInt(id)));
-    });
-  }, [id]);
-  return <ItemDetail item={item} sx={{ display:'flex', flexDirection:'column', justifyContent: 'space-around' }} />
+    useEffect(() => {
+        const db = getFirestore(app);
+        const itemsCollection = doc(db, "items", id);
+
+        getDoc(itemsCollection).then((snapshot) => {
+                const dataItemsDetail = { id: snapshot.id, ...snapshot.data() }
+                setItem(dataItemsDetail)
+                });
+    }, [id]);
+
+    return (
+        <ItemDetail item={item}></ItemDetail>
+    );
 };
 export default ItemDetailContainer;
