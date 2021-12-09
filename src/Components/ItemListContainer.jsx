@@ -19,7 +19,6 @@ const ItemListContainer = () => {
                 setProducts(snapshot.docs.map((doc)=>({id:doc.id,...doc.data()})))
                 } else{
                     let data = snapshot.docs.map((doc)=>({id:doc.id,...doc.data()}));
-                        // setProducts(data.filter((doc)=> doc.type === type));
                         setProducts(data.filter((doc)=> doc.category === parseInt(id)));
                 }
     })
