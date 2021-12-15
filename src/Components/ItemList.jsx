@@ -5,8 +5,7 @@ const ItemList = ({ products }) => {
 
   return (
     <Box sx={{ display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-around'}}>
+    flexWrap:'wrap',}}>
       {products.map((i) => {
         return (
           <Item

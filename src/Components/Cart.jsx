@@ -1,92 +1,102 @@
-import React, { Fragment } from 'react'
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import React, { Fragment, useState } from 'react'
+import app from '../services/getFirebase'
+import { getFirestore, collection, addDoc } from "firebase/firestore"
 import { useCartContext } from '../Contexts/CartContext'
-import ItemCart from './ItemCart'
-import { Link } from "react-router-dom";
 
-const Cart = () => {
-    const { cartNew, isInCart, clearCart, totalPriceCart} = useCartContext();
-    const total = totalPriceCart();
-  
+const Form = ({ name, ...props}) => {
+
+    const [order, setOrder] = useState();
+
+    const { cart, totalPriceCart } = useCartContext()
+
+    const [formData, setFormData] = useState({
+        name: "",
+        tel: "",
+        email: "",
+    })
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+
+        let order = {}
+
+        order.date = new Date();
+        order.buyer = formData
+        order.total = totalPriceCart;
+
+        order.items = cart.map(cartItems => {
+            const id = cartItems.item.id;
+            const name = cartItems.item.title;
+            const price = cartItems.item.price * cartItems.quantity;
+
+            return { id, name, price }
+        })
+
+        const db = getFirestore(app)
+        const orderCollection = collection(db,'orders')
+        addDoc(orderCollection, order).then((order)=>{
+            setOrder(order)
+            })
+    }
+    function handleOnChange(e) {
+
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
+
     return (
-      <Box
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        '& > :not(style)': {
-        m: 1,
-        width: '50em',
-        height: '100%',
-      },
-      }}
-      >
-        <Paper elevation={24}>
-      <div className="">
-        {isInCart() > 0 ? (
-          cartNew.map((i) => ( 
-            <>
-          <ItemCart
-            key={i.product.id}
-            quantity={i.product.quantity}
-            image={i.product.image}
-            price={i.product.price}
-            title={i.product.title}
-            id={i.product.id}
-          />
-            </>
-          ))
-        ) : (
-          <>
-            <p className="noItemsCart">No hay Items en el Carrito</p>
-            <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
-          <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
-            <Button disableElevation variant="contained">Volver</Button>
-          <ButtonGroup/>
-        </Link>
-          </>
-        )}
-        {isInCart() > 0 && (
-          <>
-            <Fragment>
-              <Box
-              sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              '& > :not(style)': {
-              m: 1,
-              width: '30em',
-              height: '10%',
-            },
-            }}
-              >
-              <Paper elevation={24} className="totalContainer">
-              <div className="flexTotal">
-              <p className="txtTotal">Total</p>
-              <hr className="hrCart" />
-              <p className="txtTotalNum">${total.toFixed(2)}</p>
-              </div>
-              </Paper>
-              </Box>
-              <div className="flexButtons">
-              <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
-                <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
-                 <Button disableElevation variant="contained">Seguir Comprando</Button>
-                <ButtonGroup/>
-            </Link>
-                <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
-                 <Button clearCart={clearCart} disableElevation variant="contained">Vaciar Carrito</Button>
-                <ButtonGroup/>
-              </div>
-            </Fragment>
-          </>
-        )};
-      </div>
-      </Paper>
-    </Box>);
-  };
-  export default Cart;
+        <Fragment>
+            <form
+                onChange={handleOnChange}
+                onSubmit={handleOnSubmit}
+            >
+                <div className="">
+                    <h3 className="">Completa tus Datos:</h3>
+                    <label htmlFor="name">Nombre:</label>
+                    <input name="name" className="" id="name" value={formData.name} required />
+                    <label htmlFor="phone">Tel.:</label>
+                    <input name="phone" type="number" className="" id="phone" value={formData.tel} />
+                    <label htmlFor="E-mail">Email:</label>
+                    <input
+                        onChange={handleOnChange}
+                        type="email"
+                        id="email"
+                        name="email"
+                        className=""
+                        required
+                        value={formData.email}
+                    />
+                    <label htmlFor="E-mail" required>
+                        Confirmar Email:
+                    </label>
+                    <input
+                        type="email"
+                        onChange={handleOnChange}
+                        id="emailConf"
+                        name="emailConf"
+                        value={formData.emailConf}
+                        required
+                        className={
+                            formData.email === formData.emailConf
+                                ? "asd"
+                                : "asd"
+                        }
+                    />
+                    {formData.email === formData.emailConf ? (
+                        <button className="">
+                            TERMINAR COMPRAR
+                        </button>
+                    ) : (
+                        <div className="">
+                            Terminar Compra
+                        </div>
+                    )}
+                </div>
+            </form>
+        </Fragment>
+    )
+}
+
+export default Form
