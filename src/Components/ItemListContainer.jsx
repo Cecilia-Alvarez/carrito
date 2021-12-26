@@ -13,6 +13,7 @@ const ItemListContainer = () => {
     useEffect(() => {
         const db = getFirestore(app);
         const itemsCollection = collection(db, "items");
+        setTimeout(() => {
         getDocs(itemsCollection)
             .then((snapshot) => {
               if(id === undefined){
@@ -21,11 +22,13 @@ const ItemListContainer = () => {
                     let data = snapshot.docs.map((doc)=>({id:doc.id,...doc.data()}));
                         setProducts(data.filter((doc)=> doc.category === parseInt(id)));
                 }
-    })
+    })},2000)
     }, [id]);
 
     return (
+        <div>
         <ItemList products={products} />
+        </div>
     );
 };
 

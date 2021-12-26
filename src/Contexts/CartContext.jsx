@@ -1,78 +1,47 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 
-const cartContext = createContext();
+export const CartContext = createContext([]);
 
-export const useCartContext = () => useContext(cartContext);
+export const CartProvider = ({children}) => {
+    const [ items, setItems ] = useState([]);
+    const [ totalPrice, setTotalPrice ] = useState([]);
 
-export const CartProvider = ({ children }) => {
+    const isInCart = (id) => {
+        const found = items.find( item => item.id === id );
+        return(found);
+    }
 
-    const [cart, setCart] = useState([]);
+    const addItem = (item, count) =>{
+        isInCart(item.id)
+        ?
+        setItems(items.map((prod)=>{
+            if(prod.id === item.id) {
+                prod.count += count;
+            }
+            return prod
+        }))
+        :
+        setItems([...items, { id: item.id, name: item.title, price: item.price, count: count }])
+    }
 
-    const isInCart = (idItem) => {
-        const producto = cart.find(item => idItem === item.id);
-
-        if(producto != null)
-            return true;
-        else
-            return false;
-    };
-
-    const addItemToCart = ({item, quantity}) => {
-
-        if (isInCart(item.id)) 
-        {
-            const newCart = cart.map(cartItem => cartItem.id === item.id ? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem);
-            setCart(newCart);
-            console.log('AddItemToCart', newCart)
-        } 
-        else 
-        {
-            item.cantidad = quantity;
-            const newCart = [...cart, item];
-            setCart(newCart);         
-        }
-        
-    };
-
-    const extractItemFromCart = (idItem) => {
-
-        if (isInCart(idItem)) 
-        {
-            const newCart = cart.filter(cartItem => cartItem.id !== idItem);
-            setCart(newCart);
-        }
-    };
+    const removeItem = (id) => {
+        setItems(items.filter( item => item.id !== id ));
+    }
 
     const clearCart = () => {
-
-        setCart([]);
+        setItems([]);
+        setTotalPrice();
     };
 
-    const countItemsCart = () => {
-
-        const count = 0;
-
-        cart.reduce((count, prod) => count + prod.cantidad, 0);
-
-        return count;
-    };
 
     const totalPriceCart = () => {
-
-        let precioTotal = 0;
-
-        precioTotal = cart.reduce((precioTotal, prod) => precioTotal + prod.quantity * prod.precio, 0);
-
-        return precioTotal;
+        setTotalPrice(items.reduce((sum, value) => (typeof value.price == "number" ? sum + (value.price * value.count) : sum), 0));
     };
 
-    return (
-        <cartContext.Provider
-            value={{ cart, setCart, isInCart, addItemToCart, extractItemFromCart, clearCart, countItemsCart, totalPriceCart }}
-        >
+    return(
+        <CartContext.Provider value={{ items, addItem, removeItem, clearCart, totalPriceCart, totalPrice }}>
             {children}
-        </cartContext.Provider>
-    );
-};
-export default useCartContext;
+        </CartContext.Provider>
+    )
+}

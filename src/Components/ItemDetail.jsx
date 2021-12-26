@@ -8,12 +8,13 @@ import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import ItemCount from "./ItemCount";
 import Box from '@mui/material/Box';
-// import { useCartContext } from "../Contexts/CartContext";
+import { useState } from 'react';
+import { useContext } from 'react';
+import { CartContext } from "../Contexts/CartContext";
 
-const ItemDetail = (props) => {
-    const { title, price, description, image, stock } = props.item;
-
-    // const { addItemToCart } = useCartContext();
+const ItemDetail = ({ item }) => {
+  const [ add, setAdd ] = useState(false)
+  const { addItem } = useContext(CartContext);
 
     return (
     <Box sx={{ display:'flex',
@@ -23,26 +24,33 @@ const ItemDetail = (props) => {
         <CardMedia
           component="img"
           height="540"
-          image={`${image}`}
+          image={`${item.image}`}
           alt="green iguana"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-          {title}
+          {item.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-          <h2>${price}</h2>
-          <p>{description}</p>
+          <h2>${item.price}</h2>
+          <p>{item.description}</p>
           </Typography>
         </CardContent>
         <CardActions>
-          <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
-            <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
-              <Button disableElevation variant="contained">VOLVER</Button>
-            <ButtonGroup/>
-          </Link>
-          <ItemCount stock={stock} initial={1} />
+          {
+            add ? "" : <ItemCount item={item} stock={item.stock} initial={1} addItem={addItem} />
+          }
         </CardActions>
+          <div>
+            <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
+              <ButtonGroup color="secondary" size="medium" disableElevation variant="contained"/>
+                <Button disableElevation variant="contained">VOLVER</Button>
+              <ButtonGroup/>
+            </Link>
+            <Link style={{ textDecoration:'none' }} to={`/cart/`}>       
+              <Button disableElevation variant="contained" color= "secondary">FINALIZAR COMPRA</Button> 
+            </Link>
+          </div>
         </Card>
   </Box>
 );
