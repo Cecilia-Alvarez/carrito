@@ -48,7 +48,7 @@ const ItemDetail = ({ item }) => {
               <ButtonGroup/>
             </Link>
             <Link style={{ textDecoration:'none' }} to={`/cart/`}>       
-              <Button disableElevation variant="contained" color= "secondary">FINALIZAR COMPRA</Button> 
+              <Button disableElevation variant="contained" color= "secondary">IR A CARRITO</Button> 
             </Link>
           </div>
         </Card>

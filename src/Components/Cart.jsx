@@ -1,5 +1,3 @@
-// import React, { Fragment } from 'react';
-// import app from '../services/getFirebase';
 import { useContext } from 'react';
 import { CartContext } from '../Contexts/CartContext';
 import { Link } from "react-router-dom";
@@ -7,6 +5,10 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import {
@@ -15,9 +17,29 @@ import {
   addDoc,
 } from "firebase/firestore";
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'primary.main',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Cart = () => {
 
     const { items, removeItem, clearCart, totalPriceCart, totalPrice} = useContext(CartContext);
+
+    const [orderId, setOrderId] = useState();
+
+    const [confirmationOrder, setConfirmationOrder] = useState(true);
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => setOpen(true);
 
     const inputs = [
       {
@@ -39,12 +61,10 @@ const Cart = () => {
       phone: "",
       email: "",
     });
-    // const [buttonState, setButtonState] = useState(true);
     const onChange = (event) => {
       setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
     };
     function checkOut() {
-      totalPriceCart()
       const order = {
         items: items,
         buyer: formInfo,
@@ -57,13 +77,14 @@ const Cart = () => {
       const ordersCollection = collection(db, "orders");
   
       addDoc(ordersCollection, order).then(({ id }) => {
-        console.log(id);
+        setOrderId(id);
       });
     }
     
     if(items.length > 0) {
     return (
-        <Box sx={{ display:'flex', flexWrap:'wrap', justifyContent:'center' }}>
+      <div> 
+        <Box sx={{ display:'flex', flexWrap:'wrap', justifyContent:'center', textAlign:'left' }}>
           <Box>
             {
                 items.map((item) =>(
@@ -77,47 +98,17 @@ const Cart = () => {
                     </div>
                 ))
             }
-            {/* <h2>Total: ${totalPrice}</h2> */}
+                      <Box sx={{ display: "flex", marginTop: 3, justifyContent: "flex-end" }}>
+                        <Typography >
+                          <h2>Precio total: $ {totalPrice}</h2>
+                        </Typography>
+                        <Typography sx={{ marginRight: 3 }}>
+                          {totalPriceCart()}
+                        </Typography>
+                      </Box>
             <Button style={{ marginTop:40 }} onClick={() => clearCart()}  disableElevation variant="contained" color= "secondary">VACIAR CARRO</Button>
             </Box>
-            {/* <div> */}
-                  {/* <form className="formContainer">
-                    <h4>Ingrese sus datos para efectuar la Compra</h4>
-                    <label className='titlesForm'>
-                      Nombre Completo:
-                      <input
-                        type="text"
-                        name="name"
-                        value={formInfo.name}
-                        onChange={handleChange}
-                        className='controls'
-                      />
-                    </label>
-                    <label className='titlesForm'>
-                      Número de Teléfono:
-                      <input
-                        type="text"
-                        name="phone"
-                        value={formInfo.phone}
-                        onChange={handleChange}
-                        className='controls'
-                      />
-                    </label>
-                    <label className='titlesForm'>
-                      E-mail:
-                      <input
-                        type="text"
-                        name="email"
-                        value={formInfo.email}
-                        onChange={handleChange}
-                        className='controls'
-                      />
-                    </label>
-                      <Button style={{ marginTop:40 }} className="botonFinalizar"
-                      disabled={ !(formInfo.name && formInfo.phone && formInfo.email) } type="button" onClick={checkOut()}  disableElevation variant="contained" color= "secondary">FINALIZAR COMPRA
-                      </Button>
-                  </form> */}
-                    <Box>
+                  <Box>
                       <div sx={{ marginRight: 10 }}>
                         <FormControl sx={{ position: "fixed" }}>
                           {inputs.map(({ name, label }) => (
@@ -129,12 +120,39 @@ const Cart = () => {
                               onChange={onChange}
                               sx={{ margin: 2 }}
                             />))}
-                      <Button style={{ marginTop:40 }} type="button" onClick={checkOut}  disableElevation variant="contained" color= "secondary">REALIZAR ORDEN
+                      <Button style={{ marginTop:40 }} type="button" onClick={() => {checkOut(); handleOpen()}}  disableElevation variant="contained" color= "secondary">REALIZAR ORDEN
                       </Button>
                         </FormControl>
                       </div>
                   </Box>
         </Box>
+        {orderId !== undefined &&
+                  <Modal
+                  open={open}
+                  >
+                  <Box sx={style}>
+                  <Link to={`/`} style={{ textDecoration:'none', palette:'secondary', size:'medium'}}>
+                    <IconButton
+                      aria-label="close"
+                      color="secondary"
+                      size="small"
+                      onClick={() => {
+                        setConfirmationOrder(false);
+                        clearCart()
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                    </Link>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                      ¡Tu pedido fue realizado con exito!
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      Tu código de orden es {orderId}.
+                    </Typography>
+                  </Box>
+                </Modal>}
+        </div>
     );
     } else {
       return (
