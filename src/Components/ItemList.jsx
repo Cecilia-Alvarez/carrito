@@ -1,11 +1,9 @@
 import Item from "./Item";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
 const ItemList = ({ products }) => {
-
   return (
-    <Box sx={{ display:'flex',
-    flexWrap:'wrap',}}>
+    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       {products.map((i) => {
         return (
           <Item

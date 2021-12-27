@@ -8,7 +8,7 @@ import { ThemeProvider } from '@mui/material';
 import { CartProvider } from './Contexts/CartContext';
 import { pink } from '@mui/material/colors';
 import { grey } from '@mui/material/colors';
-import './App.css';
+
 
 const theme = createTheme({
   palette: {
